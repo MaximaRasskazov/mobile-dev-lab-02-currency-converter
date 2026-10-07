@@ -7,18 +7,17 @@ import '../models/currency_rate.dart';
 // HTTP-запросы к Апишке (формируем URL, get, получаем ответ)
 
 class ApiClient {
+  // позже вернется объект CurrencyRate
   Future<CurrencyRate> getRate(
-    String base,
-    String quote,
+    String fromCurrency,
+    String toCurrency,
   ) async {
     String address =
         'https://api.frankfurter.dev/v2/rate/'
-        '${base.toLowerCase()}/${quote.toLowerCase()}';
+        '${fromCurrency.toLowerCase()}/${toCurrency.toLowerCase()}';
 
     Uri url = Uri.parse(address);
 
-    // Получаем данные о курсе с сервера и запускаем асинхронку,
-    // чтбоы интерфейс не ждал
     http.Response response = await http.get(url);
 
     if (response.statusCode != 200) {
